@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzeria da Luciano</title>
+    <title>Armeria Beretta</title>
     <style>
         :root {
-            --header-background: #df1313;
-            --category-title-color: #ffffff;
-            --text-color: #333;
+            --header-background: #0d52e7;
+            --category-title-color: #0d52e7;
+            --text-color: #0d52e7;
             --discord-color: #5865F2;
         }
 
@@ -44,7 +44,7 @@
         }
 
         body {
-            background-image: url('images/pizzeria.png');
+            background-image: url('images/sfondo.png');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -435,31 +435,31 @@
         <div class="header-top">
             <img src="images/logo.png" alt="Logo Sinistro" class="header-logo">
             <div class="header-title">
-                <h1>Pizzeria da Luciano</h1>
-                <p>La vera pizza milanese nel cuore della città</p>
+                <h1>Armeria Beretta</h1>
+                <p>Armeria Beretta: Precisione Italiana, Passione Senza Confini</p>
             </div>
             <img src="images/logo.png" alt="Logo Destro" class="header-logo">
         </div>
         <nav class="category-nav">
-            <a href="#pizze" class="category-link">Pizze</a>
-            <a href="#bibite" class="category-link">Bibite</a>
-            <a href="#menu" class="category-link">Menù</a>
+            <a href="#libere" class="category-link">Libere</a>
+            <a href="#armi" class="category-link">Armi</a>
+            <a href="#pack" class="category-link">Pack Proiettili</a>
             <a href="#" class="category-link" onclick="handleJobApplication()">Lavora con noi</a>
         </nav>
     </header>
 
-    <section id="pizze" class="category-section">
-        <h2 class="category-title">Le Nostre Pizze</h2>
+    <section id="libere" class="category-section">
+        <h2 class="category-title">Libera Vendita</h2>
         <div class="menu-grid" id="pizzeGrid"></div>
     </section>
 
-    <section id="bibite" class="category-section">
-        <h2 class="category-title">Le Nostre Bibite</h2>
+    <section id="armi" class="category-section">
+        <h2 class="category-title">Armi da Fuoco</h2>
         <div class="menu-grid" id="bibiteGrid"></div>
     </section>
 
-    <section id="menu" class="category-section">
-        <h2 class="category-title">I Nostri Menù</h2>
+    <section id="pack" class="category-section">
+        <h2 class="category-title">Pack Proiettili</h2>
         <div class="menu-grid" id="menuGrid"></div>
     </section>
 
@@ -472,7 +472,7 @@
 
     <script>
         // Configurazione Discord
-        const CLIENT_ID = '923180917198032957';
+        const CLIENT_ID = '1320348905304621118';
         const REDIRECT_URI = encodeURIComponent('https://sormanilorenzo.github.io/');
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1319454856708362292/xaoM9h1wzT3Zze9iAUv-jtKkINrgbbFljnAD7PxXDVwsMx0rgPHlCmeeyJvg9xcGC2H_';
         
@@ -539,30 +539,19 @@
         // Menu items
         const menuItems = {
             pizze: [
-                { id: 1, name: 'Margherita', price: 40, description: 'Pomodoro, Mozzarella, Olio e Basilico', image: 'images/margherita.png' },
-                { id: 2, name: 'Metallo', price: 40, description: 'Ingredienti Segreti del Sig. Luciano', image: 'images/logoirp.png' },
-                { id: 3, name: 'Napoli', price: 50, description: 'Pomodoro, mozzarella, acciughe, Olio e Origanoo', image: 'images/napoli.png' },
-                { id: 4, name: 'Diavola', price: 50, description: 'Pomodoro, Mozzarella, Salame piccante, Olio e Origano', image: 'images/diavola.png' },
-                { id: 5, name: '4 Stagioni', price: 50, description: 'Pomodoro, Mozzarella, Cotto, Olive Nere, Carciofi, Funghi, Olio e Origano', image: 'images/4-stagioni.png' },
-                { id: 6, name: 'Genovese', price: 50, description: 'Ingredienti Segreti del Sig. Luciano', image: 'images/logoirp.png' },
-                { id: 7, name: 'Capricciosa', price: 50, description: 'Pomodoro, Mozzarella, Cotto, Olive Nere, Carciofi, Funghi Champignon, Olio e Origano', image: 'images/capricciosa.png' },
-                { id: 8, name: 'Macchine Nere', price: 60, description: 'Ingredienti Segreti del Sig. Luciano', image: 'images/logoirp.png' },
-                { id: 9, name: 'Ernest', price: 60, description: 'Ingredienti Segreti del Sig. Luciano', image: 'images/logoirp.png' },
-                { id: 10, name: 'Vomero', price: 60, description: 'Ingredienti Segreti del Sig. Luciano', image: 'images/logoirp.png' },
-                { id: 11, name: 'Focaccia Genovese', price: 60, description: 'Ingredienti Segreti del Sig. Luciano', image: 'images/focacciagenovese.png' }
+                { id: 1, name: 'Item 1', price: 40, description: 'Descrizione 1', image: 'images/logob.png' },
+                { id: 2, name: 'Item 2', price: 40, description: 'Descrizione 2', image: 'images/logob.png' },
+                { id: 3, name: 'Item 3', price: 40, description: 'Descrizione 3', image: 'images/logob.png' },
             ],
             bibite: [
-                { id: 12, name: 'Coca Cola', price: 3, description: '330ml', image: 'images/cocacola.png' },
-                { id: 13, name: 'Fanta', price: 3, description: '330ml', image: 'images/fanta.png' },
-                { id: 14, name: 'Sprite', price: 3, description: '330ml', image: 'images/sprite.png' },
-                { id: 15, name: 'The al Limone', price: 3, description: '330ml', image: 'images/liptonicetealimonezero.png' },
-                { id: 16, name: 'The alla Pesca', price: 3, description: '330ml', image: 'images/liptoniceteapescazero.png' },
-                { id: 17, name: 'Acqua Naturale', price: 3, description: '330ml', image: 'images/acqua.png' }
+                { id: 4, name: 'Item 1', price: 40, description: 'Descrizione 1', image: 'images/logob.png' },
+                { id: 5, name: 'Item 2', price: 40, description: 'Descrizione 2', image: 'images/logob.png' },
+                { id: 6, name: 'Item 3', price: 40, description: 'Descrizione 3', image: 'images/logob.png' },
             ],
             menu: [
-                { id: 18, name: 'Menù Aziendale pizze', price: 5300, description: '10 di tutto', image: 'images/menuaziendale.png' },
-                { id: 19, name: 'Menù Aziendale bibite', price: 5000, description: '10 di tutto', image: 'images/menuaziendale.png' },
-                { id: 20, name: 'Menù Aziendale tutto', price: 10000, description: '10 di tutto', image: 'images/menuaziendale.png' }
+                { id: 7, name: 'Item 1', price: 40, description: 'Descrizione 1', image: 'images/logob.png' },
+                { id: 8, name: 'Item 2', price: 40, description: 'Descrizione 2', image: 'images/logob.png' },
+                { id: 9, name: 'Item 3', price: 40, description: 'Descrizione 3', image: 'images/logob.png' },
             ]
         };
 
