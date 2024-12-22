@@ -471,10 +471,12 @@
     </div>
 
     <script>
-        // Configurazione Discord
-        const CLIENT_ID = '1320348905304621118';
+       // Configurazione Discord
+        const CLIENT_ID = '923180917198032957';
         const REDIRECT_URI = encodeURIComponent('https://sormanilorenzo.github.io/');
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1319454856708362292/xaoM9h1wzT3Zze9iAUv-jtKkINrgbbFljnAD7PxXDVwsMx0rgPHlCmeeyJvg9xcGC2H_';
+        const GUILD_ID = '810293709870333972'; // Sostituire con l'ID del server Italia RolePlay
+        const ALLOWLIST_ROLE_ID = '810293709886717978'; // Sostituire con l'ID del ruolo allowlist
         
         // Audio elements
         const clickSound = document.getElementById('clickSound');
@@ -561,39 +563,77 @@
             ]
         };
 
-        // Funzioni di autenticazione Discord
         function loginWithDiscord() {
-            const scope = 'identify';
+            const scope = 'identify guilds';  // Aggiunto 'guilds' agli scope richiesti
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${scope}`;
-        }
-
-        function checkAuth() {
-            const fragment = new URLSearchParams(window.location.hash.slice(1));
-            const accessToken = fragment.get('access_token');
-
-            if (accessToken) {
-                fetchDiscordUser(accessToken);
-                window.location.hash = '';
-            }
         }
 
         async function fetchDiscordUser(accessToken) {
             try {
-                const response = await fetch('https://discord.com/api/users/@me', {
+                // Fetch user data
+                const userResponse = await fetch('https://discord.com/api/users/@me', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
                 });
                 
-                if (response.ok) {
-                    discordUser = await response.json();
-                    isLoggedIn = true;
-                    updateAuthUI();
-                    hideUnauthorizedOverlay();
-                    enableControls();
+                if (!userResponse.ok) {
+                    throw new Error('Failed to fetch user data');
                 }
+                
+                discordUser = await userResponse.json();
+                
+                // Fetch user's guilds
+                const guildsResponse = await fetch('https://discord.com/api/users/@me/guilds', {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+                
+                if (!guildsResponse.ok) {
+                    throw new Error('Failed to fetch user guilds');
+                }
+                
+                const guilds = await guildsResponse.json();
+                
+                // Check if user is in Italia RolePlay server
+                const isInServer = guilds.some(guild => guild.id === GUILD_ID);
+                
+                if (!isInServer) {
+                    alert('Devi essere membro del server Italia RolePlay per accedere!');
+                    return;
+                }
+                
+                // Fetch user's roles in the server
+                const memberResponse = await fetch(`https://discord.com/api/guilds/${GUILD_ID}/members/${discordUser.id}`, {
+                    headers: {
+                        Authorization: `Bot ${CLIENT_ID}` // Nota: richiede un bot token
+                    }
+                });
+                
+                if (!memberResponse.ok) {
+                    throw new Error('Failed to fetch member roles');
+                }
+                
+                const member = await memberResponse.json();
+                
+                // Check if user has allowlist role
+                const hasAllowlistRole = member.roles.includes(ALLOWLIST_ROLE_ID);
+                
+                if (!hasAllowlistRole) {
+                    alert('Devi avere il ruolo allowlist nel server per accedere!');
+                    return;
+                }
+                
+                // If all checks pass, update UI and enable features
+                isLoggedIn = true;
+                updateAuthUI();
+                hideUnauthorizedOverlay();
+                enableControls();
+                
             } catch (error) {
                 console.error('Errore nel recupero dei dati utente Discord:', error);
+                alert('Si è verificato un errore durante l\'accesso. Assicurati di essere membro del server Italia RolePlay e di avere il ruolo allowlist.');
             }
         }
 
